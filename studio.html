@@ -6,192 +6,123 @@
     <title>花境工作室 | Hanakyo Studio</title>
     <style>
         /* --- 1. 全域設定 --- */
-        html {
-            scroll-behavior: smooth; /* 讓捲動變得平滑優雅 */
-        }
+        html { scroll-behavior: smooth; cursor: default; /* 確保滑鼠樣式一致 */ }
 
         body {
-            /* 背景設定：固定不動，製造視差感 */
             background-image: url('bg.png'); 
             background-color: #f4f1ea; 
             background-size: cover; 
             background-position: center;
-            background-attachment: fixed; 
+            background-attachment: fixed;
             
-            font-family: "Songti TC", "Noto Serif TC", "serif"; /* 宋體/明體，營造文學氣質 */
+            font-family: "Songti TC", "Noto Serif TC", "serif";
             margin: 0;
             padding: 0;
             color: #5a5a5a;
-            line-height: 2; /* 行距拉大，像詩集一樣 */
+            line-height: 2;
+            overflow-x: hidden; /* 防止水平卷軸出現 */
         }
 
-        /* --- 2. 頂部選單 (極簡風) --- */
+        /* --- 2. CSS 背景動態光點 (原本的背景特效) --- */
+        .ambient-light {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; pointer-events: none;
+        }
+        .light-orb {
+            position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.6; animation: float 20s infinite ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            50% { transform: translate(30px, -50px) scale(1.2); opacity: 0.7; }
+            100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+        }
+        .orb-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: rgba(255, 255, 255, 0.4); animation-duration: 25s; }
+        .orb-2 { bottom: 10%; right: -5%; width: 400px; height: 400px; background: rgba(255, 220, 220, 0.3); animation-duration: 18s; animation-delay: -5s; }
+        .orb-3 { top: 40%; left: 30%; width: 300px; height: 300px; background: rgba(255, 250, 205, 0.2); animation-duration: 30s; animation-delay: -10s; }
+
+        /* --- 【新增】✨ 鼠標星光拖尾特效樣式 ✨ --- */
+        .cursor-trail {
+            position: absolute;
+            width: 6px;  /* 星星大小 */
+            height: 6px;
+            /* 淡金色發光核心 */
+            background: rgba(255, 250, 205, 0.9); 
+            border-radius: 50%; /* 圓形粒子 */
+            /* 強烈的發光暈染效果 */
+            box-shadow: 
+                0 0 5px rgba(255, 250, 205, 0.8),
+                0 0 10px rgba(255, 255, 255, 0.6),
+                0 0 15px rgba(255, 220, 220, 0.4);
+            pointer-events: none; /* 絕對不能擋住滑鼠點擊 */
+            z-index: 9999; /* 確保在最上層顯示 */
+            animation: trailFade 1s forwards; /* 1秒後消失動畫 */
+        }
+
+        /* 星光消失的動畫 */
+        @keyframes trailFade {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.2) translateY(20px); /* 縮小並稍微往下掉 */
+            }
+        }
+
+        /* --- 3. 頂部選單 --- */
         nav {
-            position: fixed; /* 固定在最上方 */
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between; /* 左右分開 */
-            align-items: center;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent); /* 漸層淡出 */
-            z-index: 100;
-            box-sizing: border-box;
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);
+            z-index: 100; box-sizing: border-box; backdrop-filter: blur(2px);
         }
+        .nav-logo { font-size: 1.2rem; color: #3e3a37; text-decoration: none; font-weight: bold; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
+        .nav-links a { text-decoration: none; color: #5a5a5a; margin-left: 25px; font-size: 0.9rem; transition: 0.3s; letter-spacing: 1px; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
+        .nav-links a:hover { color: #bfa49f; }
 
-        .nav-logo {
-            font-size: 1.2rem;
-            color: #3e3a37;
-            text-decoration: none;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #5a5a5a;
-            margin-left: 25px;
-            font-size: 0.9rem;
-            transition: 0.3s;
-            letter-spacing: 1px;
-        }
-
-        .nav-links a:hover {
-            color: #bfa49f; /* 懸停變粉棕色 */
-        }
-
-        /* --- 3. 首頁主視覺 (Hero Section) --- */
-        .hero {
-            height: 100vh; /* 佔滿整個螢幕高度 */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .hero img {
-            max-width: 180px; /* Logo 大小 */
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5)); /* 微微發光，讓Logo在背景上更清楚 */
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            color: #3e3a37;
-            margin: 10px 0;
-            letter-spacing: 5px;
-            font-weight: normal;
-        }
-
-        .hero p {
-            font-size: 1rem;
-            color: #8c8680;
-            letter-spacing: 3px;
-            margin-bottom: 50px;
-        }
-
-        /* 首頁的快速導覽按鈕 (你想要的「頁內按鈕」) */
-        .hero-menu {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
+        /* --- 4. 內容區塊設定 --- */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+        .hero img { max-width: 180px; margin-bottom: 20px; filter: drop-shadow(0 0 15px rgba(255,255,255,0.8)); }
+        .hero h1 { font-size: 2.5rem; color: #3e3a37; margin: 10px 0; letter-spacing: 5px; font-weight: normal; text-shadow: 0 0 20px rgba(255,255,255,0.8); }
+        .hero p { font-size: 1rem; color: #5a5a5a; letter-spacing: 3px; margin-bottom: 50px; text-shadow: 0 0 10px rgba(255,255,255,0.8); font-weight: bold; }
+        .hero-menu { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
         .menu-btn {
-            text-decoration: none;
-            color: #5a5a5a;
-            border: 1px solid #a8a4a0;
-            padding: 10px 30px;
-            border-radius: 50px; /* 圓形按鈕 */
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            transition: all 0.4s ease;
-            background: rgba(255,255,255,0.3); /* 半透明白底 */
+            text-decoration: none; color: #5a5a5a; border: 1px solid #a8a4a0;
+            padding: 10px 30px; border-radius: 50px; font-size: 0.9rem; letter-spacing: 2px;
+            transition: all 0.4s ease; background: rgba(255,255,255,0.3); backdrop-filter: blur(5px);
         }
+        .menu-btn:hover { background: #3e3a37; color: white; border-color: #3e3a37; transform: translateY(-3px); }
 
-        .menu-btn:hover {
-            background: #3e3a37;
-            color: white;
-            border-color: #3e3a37;
-            transform: translateY(-3px); /* 微微浮起 */
-        }
-
-        /* --- 4. 內容區塊 (無邊框設計) --- */
-        section {
-            padding: 100px 20px; /* 上下留大白 */
-            max-width: 800px;
-            margin: 0 auto; /* 置中 */
-            text-align: center; /* 文字置中 */
-        }
-
+        section { padding: 100px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
         .section-title {
-            font-size: 1.8rem;
-            color: #3e3a37;
-            margin-bottom: 40px;
-            letter-spacing: 5px;
-            display: inline-block;
-            border-bottom: 1px solid #dcd8d0; /* 極細底線 */
-            padding-bottom: 10px;
+            font-size: 1.8rem; color: #3e3a37; margin-bottom: 40px; letter-spacing: 5px;
+            display: inline-block; border-bottom: 1px solid #dcd8d0; padding-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
         }
-
-        .text-content {
-            font-size: 1.1rem;
-            color: #4a4a4a;
-            /* 讓文字在複雜背景上也看得清楚的關鍵：文字陰影 */
-            text-shadow: 0 0 20px rgba(255,255,255,0.8); 
-        }
-
-        /* 成員圓圈 */
+        .text-content { font-size: 1.1rem; color: #3e3a37; text-shadow: 0 0 25px rgba(255,255,255,1); font-weight: 500; }
         .member-avatar {
-            width: 120px;
-            height: 120px;
-            background-color: #ccc; /* 預設灰底 */
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            border: 3px solid rgba(255,255,255,0.6);
-            /* 這裡之後換成：background-image: url('avatar.jpg'); background-size: cover; */
+            width: 120px; height: 120px; background-color: rgba(255,255,255,0.5);
+            border-radius: 50%; margin: 0 auto 20px; border: 3px solid rgba(255,255,255,0.8); backdrop-filter: blur(5px);
         }
-
-        /* 聯繫區塊 */
-        .contact-box {
-            margin-top: 30px;
-        }
-        .contact-item {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-        .contact-label {
-            display: block;
-            font-size: 0.8rem;
-            color: #8c8680;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        /* 底部返回 */
-        .footer-nav {
-            padding: 50px 0;
-            text-align: center;
-        }
+        .contact-box { margin-top: 30px; }
+        .contact-item { margin-bottom: 20px; font-size: 1.1rem; }
+        .contact-label { display: block; font-size: 0.8rem; color: #5a5a5a; letter-spacing: 2px; margin-bottom: 5px; font-weight: bold; }
+        .footer-nav { padding: 50px 0; text-align: center; }
         .back-link {
-            text-decoration: none;
-            color: #8c8680;
-            font-size: 0.9rem;
-            border-bottom: 1px solid transparent;
-            transition: 0.3s;
+            text-decoration: none; color: #5a5a5a; font-size: 0.9rem;
+            border-bottom: 1px solid transparent; transition: 0.3s; text-shadow: 0 0 10px rgba(255,255,255,0.8);
         }
-        .back-link:hover {
-            border-bottom: 1px solid #8c8680;
-            color: #5a5a5a;
-        }
+        .back-link:hover { border-bottom: 1px solid #5a5a5a; color: #3e3a37; }
 
     </style>
 </head>
 <body>
+
+    <div class="ambient-light">
+        <div class="light-orb orb-1"></div>
+        <div class="light-orb orb-2"></div>
+        <div class="light-orb orb-3"></div>
+    </div>
 
     <nav>
         <a href="#" class="nav-logo">Hanakyo</a>
@@ -205,7 +136,6 @@
         <img src="logo.png" alt="花境工作室 Logo">
         <h1>花境工作室</h1>
         <p>優雅．簡約．二次元視覺設計</p>
-
         <div class="hero-menu">
             <a href="#about" class="menu-btn">關於 ABOUT</a>
             <a href="#member" class="menu-btn">成員 MEMBER</a>
@@ -217,11 +147,72 @@
     <section id="about">
         <h2 class="section-title">ABOUT</h2>
         <div class="text-content">
-            <p>
-                「在虛擬的邊境，綻放真實的花朵。」
-            </p>
+            <p>「在虛擬的邊境，綻放真實的花朵。」</p>
             <br>
-            <p>
-                花境工作室專注於二次元領域的美術支援。<br>
-                我們相信設計不只是裝飾，而是角色的靈魂延伸。<br>
-                從 Logo 標誌到直播介
+            <p>花境工作室專注於二次元領域的美術支援。<br>我們相信設計不只是裝飾，而是角色的靈魂延伸。</p>
+        </div>
+    </section>
+
+    <section id="member">
+        <h2 class="section-title">MEMBER</h2>
+        <div class="member-avatar"></div>
+        <h3 style="margin: 10px 0; letter-spacing: 2px;">Hanakyo</h3>
+        <p style="font-size: 0.9rem; color: #5a5a5a;">Lead Designer</p>
+        <div class="text-content" style="margin-top: 20px;">
+            <p>擅長風格：日系極簡、優雅、精緻排版</p>
+        </div>
+    </section>
+
+    <section id="works">
+        <h2 class="section-title">WORKS</h2>
+        <div class="text-content">
+            <p>作品集整理中...</p>
+            <br>
+            <a href="#" class="menu-btn" style="font-size: 0.8rem;">查看更多作品</a>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">CONTACT</h2>
+        <div class="text-content">
+            <div class="contact-box">
+                <div class="contact-item">
+                    <span class="contact-label">LINE OFFICIAL</span>
+                    @hanakyo
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">EMAIL</span>
+                    vtfactory0603@gmail.com
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer-nav">
+        <a href="index.html" class="back-link">↶ 返回入口首頁 Back to Home</a>
+    </div>
+
+    <script>
+        document.addEventListener('mousemove', function(e) {
+            // 1. 創建一個新的星星元素
+            let star = document.createElement('div');
+            star.className = 'cursor-trail';
+
+            // 2. 設定星星的位置在滑鼠游標中心
+            // e.pageX 和 e.pageY 是滑鼠當前的座標
+            star.style.left = (e.pageX - 3) + 'px'; // 減去一半寬度以置中
+            star.style.top = (e.pageY - 3) + 'px';
+
+            // 3. 把星星加到網頁的 body 中
+            document.body.appendChild(star);
+
+            // 4. 設定定時器，在 1000 毫秒 (1秒) 後移除這個星星
+            // 配合 CSS 的 animation 時間，確保它消失後被清理掉
+            setTimeout(function() {
+                star.remove();
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>
