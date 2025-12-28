@@ -61,25 +61,29 @@
             display: flex;
             gap: 15px;
             justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
         }
 
         .btn {
             text-decoration: none;
-            padding: 10px 25px;
-            border: 1px solid #b0aca5;
-            border-radius: 5px;
             color: #5a5a5a;
-            font-size: 0.9rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
-            background: transparent;
             letter-spacing: 1px;
+            border: none;
+            background: transparent;
+            padding: 0;
         }
 
         .btn:hover {
-            background-color: #8f8b85;
-            color: white;
-            border-color: #8f8b85;
+            color: #bfa49f;
+            font-weight: bold;
+        }
+
+        .divider {
+            color: #ccc;
+            font-weight: lighter;
         }
     </style>
 </head>
@@ -88,8 +92,16 @@
         <img src="logo.png" alt="花境工作室 Logo" style="max-width: 140px; margin-bottom: 10px; margin-top: 20px;">
         <h1 style="margin-top: 0; margin-bottom: 5px; font-size: 2rem;">花境工作室</h1>
         <p style="margin-top: 0; color: #888;">Hanakyo Studio</p>
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-        <p>網站監修中... Coming Soon</p>
+        
+        <hr>
+
+        <div class="btn-container">
+            <a href="studio.html" class="btn">工作室介紹</a>
+            <span class="divider">|</span>
+            <a href="shop.html" class="btn">代理鋪</a>
+            <span class="divider">|</span>
+            <a href="watermark.html" class="btn">水印</a>
+        </div>
     </div>
 </body>
 </html>
