@@ -3,73 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>花境工作室</title>
+    <title>花境工作室 | Hanakyo Studio</title>
     <style>
+        /* --- 1. 全域設定 --- */
+        html {
+            scroll-behavior: smooth; /* 讓捲動變得平滑優雅 */
+        }
+
         body {
-            background-image: url('bg.png');
-            background-color: #f4f1ea;
-            background-size: cover;
+            /* 背景設定：固定不動，製造視差感 */
+            background-image: url('bg.png'); 
+            background-color: #f4f1ea; 
+            background-size: cover; 
             background-position: center;
-            background-attachment: fixed;
-            font-family: "Songti TC", "Noto Serif TC", "serif";
+            background-attachment: fixed; 
+            
+            font-family: "Songti TC", "Noto Serif TC", "serif"; /* 宋體/明體，營造文學氣質 */
             margin: 0;
+            padding: 0;
             color: #5a5a5a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            line-height: 2; /* 行距拉大，像詩集一樣 */
         }
-        .container {
-            padding: 50px 40px;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-            border-radius: 8px;
-            max-width: 600px;
+
+        /* --- 2. 頂部選單 (極簡風) --- */
+        nav {
+            position: fixed; /* 固定在最上方 */
+            top: 0;
+            left: 0;
             width: 100%;
-            border: 1px solid rgba(255,255,255,0.8);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between; /* 左右分開 */
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent); /* 漸層淡出 */
+            z-index: 100;
+            box-sizing: border-box;
         }
-        h1 {
-            text-align: center;
+
+        .nav-logo {
+            font-size: 1.2rem;
             color: #3e3a37;
-            margin-top: 0;
-            margin-bottom: 30px;
-            font-size: 1.8rem;
-            letter-spacing: 3px;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
-        .section {
-            margin-bottom: 35px;
-            line-height: 1.8;
-        }
-        .section h3 {
-            font-size: 1.1rem;
-            border-bottom: 1px solid #dcd8d0;
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            color: #8c8680;
+
+        .nav-links a {
+            text-decoration: none;
+            color: #5a5a5a;
+            margin-left: 25px;
+            font-size: 0.9rem;
+            transition: 0.3s;
             letter-spacing: 1px;
         }
-        .section p { margin: 0; font-size: 0.95rem; }
-        .btn-home {
-            display: block; text-align: center; text-decoration: none; color: #8c8680;
-            border: 1px solid #dcd8d0; padding: 10px 0; border-radius: 5px; transition: 0.3s;
-            margin-top: 40px; font-size: 0.9rem; letter-spacing: 1px;
+
+        .nav-links a:hover {
+            color: #bfa49f; /* 懸停變粉棕色 */
         }
-        .btn-home:hover { background-color: #3e3a37; color: white; border-color: #3e3a37; }
+
+        /* --- 3. 首頁主視覺 (Hero Section) --- */
+        .hero {
+            height: 100vh; /* 佔滿整個螢幕高度 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero img {
+            max-width: 180px; /* Logo 大小 */
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5)); /* 微微發光，讓Logo在背景上更清楚 */
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #3e3a37;
+            margin: 10px 0;
+            letter-spacing: 5px;
+            font-weight: normal;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: #8c8680;
+            letter-spacing: 3px;
+            margin-bottom: 50px;
+        }
+
+        /* 首頁的快速導覽按鈕 (你想要的「頁內按鈕」) */
+        .hero-menu {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .menu-btn {
+            text-decoration: none;
+            color: #5a5a5a;
+            border: 1px solid #a8a4a0;
+            padding: 10px 30px;
+            border-radius: 50px; /* 圓形按鈕 */
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            background: rgba(255,255,255,0.3); /* 半透明白底 */
+        }
+
+        .menu-btn:hover {
+            background: #3e3a37;
+            color: white;
+            border-color: #3e3a37;
+            transform: translateY(-3px); /* 微微浮起 */
+        }
+
+        /* --- 4. 內容區塊 (無邊框設計) --- */
+        section {
+            padding: 100px 20px; /* 上下留大白 */
+            max-width: 800px;
+            margin: 0 auto; /* 置中 */
+            text-align: center; /* 文字置中 */
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #3e3a37;
+            margin-bottom: 40px;
+            letter-spacing: 5px;
+            display: inline-block;
+            border-bottom: 1px solid #dcd8d0; /* 極細底線 */
+            padding-bottom: 10px;
+        }
+
+        .text-content {
+            font-size: 1.1rem;
+            color: #4a4a4a;
+            /* 讓文字在複雜背景上也看得清楚的關鍵：文字陰影 */
+            text-shadow: 0 0 20px rgba(255,255,255,0.8); 
+        }
+
+        /* 成員圓圈 */
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            background-color: #ccc; /* 預設灰底 */
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 3px solid rgba(255,255,255,0.6);
+            /* 這裡之後換成：background-image: url('avatar.jpg'); background-size: cover; */
+        }
+
+        /* 聯繫區塊 */
+        .contact-box {
+            margin-top: 30px;
+        }
+        .contact-item {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        .contact-label {
+            display: block;
+            font-size: 0.8rem;
+            color: #8c8680;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        /* 底部返回 */
+        .footer-nav {
+            padding: 50px 0;
+            text-align: center;
+        }
+        .back-link {
+            text-decoration: none;
+            color: #8c8680;
+            font-size: 0.9rem;
+            border-bottom: 1px solid transparent;
+            transition: 0.3s;
+        }
+        .back-link:hover {
+            border-bottom: 1px solid #8c8680;
+            color: #5a5a5a;
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
+
+    <nav>
+        <a href="#" class="nav-logo">Hanakyo</a>
+        <div class="nav-links">
+            <a href="index.html">返回首頁</a>
+            <a href="shop.html">代理鋪</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <img src="logo.png" alt="花境工作室 Logo">
         <h1>花境工作室</h1>
-        <div class="section">
-            <h3>關於我們 About</h3>
-            <p>提供二次元美術支援、平面設計、Logo設計與視覺統籌。</p>
+        <p>優雅．簡約．二次元視覺設計</p>
+
+        <div class="hero-menu">
+            <a href="#about" class="menu-btn">關於 ABOUT</a>
+            <a href="#member" class="menu-btn">成員 MEMBER</a>
+            <a href="#works" class="menu-btn">作品 WORKS</a>
+            <a href="#contact" class="menu-btn">聯繫 CONTACT</a>
         </div>
-        <div class="section">
-            <h3>委託聯繫 Contact</h3>
-            <p>LINE 官方帳號：@hanakyo</p>
-        </div>
-        <a href="index.html" class="btn-home">返回首頁</a>
     </div>
-</body>
-</html>
+
+    <section id="about">
+        <h2 class="section-title">ABOUT</h2>
+        <div class="text-content">
+            <p>
+                「在虛擬的邊境，綻放真實的花朵。」
+            </p>
+            <br>
+            <p>
+                花境工作室專注於二次元領域的美術支援。<br>
+                我們相信設計不只是裝飾，而是角色的靈魂延伸。<br>
+                從 Logo 標誌到直播介
