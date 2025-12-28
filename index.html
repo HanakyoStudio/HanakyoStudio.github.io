@@ -6,39 +6,80 @@
     <title>花境工作室 Hanakyo Studio</title>
     <style>
         body {
-            font-family: "Microsoft JhengHei", "Heiti TC", sans-serif; /* 使用微軟正黑體 */
-            background-color: #f9f9f9; /* 淺灰背景，比較護眼 */
+            background-image: url('bg.png'); 
+            background-color: #f4f1ea; 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            font-family: "Songti TC", "Noto Serif TC", "serif";
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            color: #333;
+            color: #5a5a5a;
         }
+
         .container {
             text-align: center;
-            padding: 40px;
-            background: white;
-            border-radius: 15px; /* 圓角 */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* 淡淡的陰影增加質感 */
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.95); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid rgba(255,255,255,0.6);
         }
+
         h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
+            color: #3e3a37;
+            margin-top: 0;
+            margin-bottom: 5px; 
+            font-size: 2rem;
+            font-weight: normal;
+            letter-spacing: 2px;
         }
+
         p {
-            color: #666;
-            font-size: 1.1rem;
+            color: #7a7570;
+            margin-top: 0;
+            font-size: 1rem;
+            letter-spacing: 1px;
         }
+
+        hr {
+            border: 0; 
+            border-top: 1px solid #d0cdc7;
+            margin: 30px 0;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-container {
+            margin-top: 35px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #58a6ff; /* GitHub 的藍色 */
-            color: white;
             text-decoration: none;
+            padding: 10px 25px;
+            border: 1px solid #b0aca5;
             border-radius: 5px;
-            font-weight: bold;
+            color: #5a5a5a;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background: transparent;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: #8f8b85;
+            color: white;
+            border-color: #8f8b85;
         }
     </style>
 </head>
